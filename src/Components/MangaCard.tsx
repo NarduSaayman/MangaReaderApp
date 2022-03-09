@@ -5,17 +5,18 @@ import { getMangaByID } from "../Services/MangaDexApi";
 export default function MangaCard() {
   const [getManga, setManga] = useState<iManga | null>();
 
-  const manga$ = getMangaByID(`789642f8-ca89-4e4e-8f7b-eee4d17ea08b`);
+  const manga$ = getMangaByID(`32d76d19-8a05-4db0-9fc2-e0b0648fe9d0`);
   useEffect(() => {
     manga$.subscribe((manga) => {
       console.log(manga);
+      console.log(getManga?.data.attributes.title.en);
       setManga(manga);
     });
   }, []);
 
   return (
     <div>
-      <div />
+      <p>{getManga?.data.attributes.title.en}</p>
     </div>
   );
 }
