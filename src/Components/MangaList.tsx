@@ -3,8 +3,9 @@ import { iCoverList } from "../Interfaces/CoverList";
 import { getCoverList } from "../Services/MangaDexApi";
 
 export default function MangaList() {
-  const coverList$ = getCoverList();
   const [coverList, setCoverList] = useState<iCoverList | null>(null);
+
+  const coverList$ = getCoverList();
 
   useEffect(() => {
     coverList$.subscribe((covers) => {
