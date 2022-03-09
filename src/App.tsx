@@ -1,10 +1,10 @@
 import React from "react";
-import MangaList from "./Components/MangaList";
+import MangaCard from "./Components/MangaCard";
 
 function App() {
   return (
     <div className="App">
-      <MangaList />
+      <MangaCard />
     </div>
   );
 }

@@ -32,7 +32,7 @@ export function getMangas(): Observable<iManga[]> {
         throw new Error(err.toString());
       }),
   ); // end from
-}
+} // end function
 
 export function getMangaByID(id: string): Observable<iManga> {
   return from(
@@ -48,4 +48,20 @@ export function getMangaByID(id: string): Observable<iManga> {
         throw new Error(err.toString());
       }),
   ); // end from
-}
+} // end function
+
+export function getMangasByTitle(title: string): Observable<iManga[]> {
+  return from(
+    fetch(`https://api.mangadex.org/manga?title=${title}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res?.json() as Promise<iManga[]>;
+      })
+      .then((data: iManga[]) => data)
+      .catch((err) => {
+        throw new Error(err.toString());
+      }),
+  ); // end from
+} // end function
