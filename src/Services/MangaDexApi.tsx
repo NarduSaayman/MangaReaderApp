@@ -50,9 +50,12 @@ export function getMangaByID(id: string): Observable<iManga> {
   ); // end from
 } // end function
 
-export function getMangasByTitle(title: string): Observable<iManga[]> {
+export function getMangasByTitle(
+  title: string,
+  amount: number,
+): Observable<iManga[]> {
   return from(
-    fetch(`https://api.mangadex.org/manga?title=${title}`)
+    fetch(`https://api.mangadex.org/manga?title=${title}&limit=${amount}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText);
