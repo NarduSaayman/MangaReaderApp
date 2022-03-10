@@ -21,5 +21,5 @@ export default function rtkRecentReadMangas() {
     console.log(recentlyReadMangas);
   }, []);
 
-  return <div>{recentlyReadMangas[0].id}</div>;
+  return <div>{recentlyReadMangas?.[0]?.id}</div>;
 }

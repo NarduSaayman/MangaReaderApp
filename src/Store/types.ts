@@ -4,17 +4,17 @@ export enum RecentlyReadState {
   DROPPED = `dropped`,
 }
 
+export enum RecentlyReadMangaAction {
+  ADD_MANGA = `ADD_MANGA`,
+  SET_STATUS = `SET_STATUS`,
+}
+
 export type RecentlyReadManga = {
   id: string;
   coverUrl: string;
   chapter: string;
   status: RecentlyReadState;
 };
-
-export enum RecentlyReadMangaAction {
-  ADD_MANGA = `ADD_MANGA`,
-  SET_STATUS = `SET_STATUS`,
-}
 
 export type ActionTypes =
   | {

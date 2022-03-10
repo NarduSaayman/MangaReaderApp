@@ -1,9 +1,12 @@
 import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import logo from "./assets/images/logo.svg";
+import MangaCard from "./Components/MangaCard";
 import RecentlyReadMangas from "./Components/RecentlyReadMangas";
 import { rtkstore } from "./Store/rtkstore";
-import { RecentlyReadState } from "./Store/types";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -13,7 +16,7 @@ function App() {
           <div className="">
             <img className="" src={logo} alt="" />
           </div>
-          <h1>TikesReader</h1>
+          <h1>Tike'sReader</h1>
         </div>
         <div>
           <input type="text" />
@@ -29,6 +32,12 @@ function App() {
         <Provider store={rtkstore}>
           <RecentlyReadMangas />
         </Provider>
+      </div>
+
+      <div>
+        <QueryClientProvider client={queryClient}>
+          <MangaCard />
+        </QueryClientProvider>
       </div>
     </div>
   );

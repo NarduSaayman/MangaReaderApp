@@ -50,18 +50,8 @@ export function fetchMangaByID(id: string): Observable<iManga> {
   ); // end from
 } // end function
 
-export function fetchMangaByIDPromise(id: string): Promise<iManga> {
-  return fetch(`https://api.mangadex.org/manga/${id}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      return res?.json() as Promise<iManga>;
-    })
-    .then((data: iManga) => data)
-    .catch((err) => {
-      throw new Error(err.toString());
-    });
+export function fetchMangaByIDPromise(id: string): Promise<Response> {
+  return fetch(`https://api.mangadex.org/manga/${id}`);
 } // end function
 
 export function fetchMangasByTitle(
