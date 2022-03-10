@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { iCoverList } from "../Interfaces/CoverList";
-import { getCoverList } from "../Services/MangaDexApi";
+import { fetchCoverList } from "../Services/MangaDexApi";
 
 export default function MangaList() {
   const [coverList, setCoverList] = useState<iCoverList | null>(null);
 
-  const coverList$ = getCoverList();
+  const coverList$ = fetchCoverList();
 
   useEffect(() => {
-    coverList$.subscribe((covers) => {
+    coverList$.subscribe((covers: React.SetStateAction<iCoverList | null>) => {
       console.log(covers);
       setCoverList(covers);
     });

@@ -2,7 +2,7 @@ import { from, Observable } from "rxjs";
 import { iCoverList } from "../Interfaces/CoverList";
 import { iManga } from "../Interfaces/Manga";
 
-export function getCoverList(): Observable<iCoverList> {
+export function fetchCoverList(): Observable<iCoverList> {
   return from(
     fetch(`https://api.mangadex.org/cover`)
       .then((res) => {
@@ -16,9 +16,9 @@ export function getCoverList(): Observable<iCoverList> {
         throw new Error(err.toString());
       }),
   ); // end from
-}
+} // end function
 
-export function getMangas(): Observable<iManga[]> {
+export function fetchMangas(): Observable<iManga[]> {
   return from(
     fetch(`https://api.mangadex.org/manga`)
       .then((res) => {
@@ -34,7 +34,7 @@ export function getMangas(): Observable<iManga[]> {
   ); // end from
 } // end function
 
-export function getMangaByID(id: string): Observable<iManga> {
+export function fetchMangaByID(id: string): Observable<iManga> {
   return from(
     fetch(`https://api.mangadex.org/manga/${id}`)
       .then((res) => {
@@ -50,9 +50,23 @@ export function getMangaByID(id: string): Observable<iManga> {
   ); // end from
 } // end function
 
-export function getMangasByTitle(
+export function fetchMangaByIDPromise(id: string): Promise<iManga> {
+  return fetch(`https://api.mangadex.org/manga/${id}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      return res?.json() as Promise<iManga>;
+    })
+    .then((data: iManga) => data)
+    .catch((err) => {
+      throw new Error(err.toString());
+    });
+} // end function
+
+export function fetchMangasByTitle(
   title: string,
-  amount: number,
+  amount: number = 4,
 ): Observable<iManga[]> {
   return from(
     fetch(`https://api.mangadex.org/manga?title=${title}&limit=${amount}`)
