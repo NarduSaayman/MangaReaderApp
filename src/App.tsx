@@ -1,5 +1,4 @@
 import React from "react";
-import MangaCard from "./Components/MangaCard";
 import logo from "./assets/images/logo.svg";
 
 function App() {
