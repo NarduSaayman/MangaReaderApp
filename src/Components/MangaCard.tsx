@@ -1,7 +1,7 @@
-import React, { useEffect, useState, SetStateAction } from "react";
+import React from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { iManga } from "../Interfaces/Manga";
-import { fetchMangaByID, fetchMangaByIDPromise } from "../Services/MangaDexApi";
+import { fetchMangaByIDPromise } from "../Services/MangaDexApi";
 
 export default function MangaCard() {
   // const [getManga, setManga] = useState<iManga | null>();
@@ -35,6 +35,8 @@ export default function MangaCard() {
   if (status === `error`) {
     return <div>{`An error has occurred: ${error?.message}`}</div>;
   }
+
+  console.log(data?.data);
 
   return (
     <div>

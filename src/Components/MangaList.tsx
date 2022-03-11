@@ -17,7 +17,7 @@ export default function MangaList() {
   return (
     <div>
       <img
-        src={`https://uploads.mangadex.org/covers/${coverList?.data[1].relationships[0].id}/${coverList?.data[1].attributes.fileName}`}
+        src={`https://uploads.mangadex.org/covers/${coverList?.data[9].relationships[0].id}/${coverList?.data[9].attributes.fileName}`}
         alt=""
       />
     </div>

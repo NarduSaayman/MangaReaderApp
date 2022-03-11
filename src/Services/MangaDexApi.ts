@@ -54,6 +54,10 @@ export function fetchMangaByIDPromise(id: string): Promise<Response> {
   return fetch(`https://api.mangadex.org/manga/${id}`);
 } // end function
 
+export function fetchCoverByIDPromise(id: string): Promise<Response> {
+  return fetch(`https://api.mangadex.org/cover/${id}`);
+} // end function
+
 export function fetchMangasByTitle(
   title: string,
   amount: number = 4,

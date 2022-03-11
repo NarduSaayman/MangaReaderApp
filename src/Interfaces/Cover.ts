@@ -1,4 +1,4 @@
-interface Relationship {
+export interface Relationship {
   id: string;
   type: string;
 }
@@ -13,7 +13,7 @@ interface Attributes {
   version: number;
 }
 
-interface Data {
+export interface Data {
   id: string;
   type: string;
   attributes: Attributes;
