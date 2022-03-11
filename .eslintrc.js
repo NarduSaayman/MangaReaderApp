@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: `latest`,
     sourceType: `module`,
   },
-  plugins: [`react`, `@typescript-eslint`],
+  plugins: [`react`, `@typescript-eslint`, `react-hooks`],
   rules: {
     quotes: [`error`, `backtick`],
     "react/jsx-filename-extension": [
@@ -20,6 +20,9 @@ module.exports = {
       { extensions: [`.js`, `.jsx`, `.ts`, `.tsx`] },
     ],
     "import/extensions": [`error`, `never`],
+
+    "react-hooks/rules-of-hooks": `error`, // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": `warn`, // Checks effect dependencies
   },
   settings: {
     "import/resolver": {
