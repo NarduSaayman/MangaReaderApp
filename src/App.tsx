@@ -2,8 +2,6 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import logo from "./assets/images/logo.svg";
-import MangaCard from "./Components/MangaCard";
-import MangaList from "./Components/MangaList";
 import Manga from "./Components/MangaPage";
 import RecentlyReadMangas from "./Components/RecentlyReadMangas";
 import { rtkstore } from "./Store/rtkstore";

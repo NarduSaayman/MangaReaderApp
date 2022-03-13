@@ -13,17 +13,17 @@ interface Attributes {
   version: number;
 }
 
-interface Datum {
+export interface ICoverListDatum {
   id: string;
   type: string;
   attributes: Attributes;
   relationships: Relationship[];
 }
 
-export interface iCoverList {
+export interface ICoverList {
   result: string;
   response: string;
-  data: Datum[];
+  data: ICoverListDatum[];
   limit: number;
   offset: number;
   total: number;

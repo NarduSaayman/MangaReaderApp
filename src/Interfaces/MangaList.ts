@@ -137,17 +137,17 @@ interface Relationship {
   related?: string;
 }
 
-interface Datum {
+export interface IMangaListDatum {
   id: string;
   type: string;
   attributes: Attributes2;
   relationships: Relationship[];
 }
 
-export interface iMangaList {
+export interface IMangaList {
   result: string;
   response: string;
-  data: Datum[];
+  data: IMangaListDatum[];
   limit: number;
   offset: number;
   total: number;

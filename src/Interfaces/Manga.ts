@@ -76,15 +76,15 @@ interface Relationship {
   type: string;
   related?: string;
 }
-interface Data {
+export interface IMangaData {
   id: string;
   type: string;
   attributes: Attributes2;
   relationships: Relationship[];
 }
 
-export interface iManga {
+export interface IManga {
   result: string;
   response: string;
-  data: Data;
+  data: IMangaData;
 }
