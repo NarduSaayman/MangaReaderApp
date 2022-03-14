@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { IMangaChapterData } from "../Interfaces/Chapter";
 import { ICoverData } from "../Interfaces/Cover";
 import { IMangaData } from "../Interfaces/Manga";
-import { IMangaVolumes, IMangaVolumesRoot } from "../Interfaces/MangaVolumes";
+import { IMangaVolumes } from "../Interfaces/MangaVolumes";
 import { IMangaPagesRoot } from "../Interfaces/Pages";
 import {
   fetchChapterByIDPromise,
@@ -28,7 +28,7 @@ function Pages(props: PagesProps) {
 export default function Manga() {
   // Get Manga
   const mangaQuery = useQuery<IMangaData, Error>(`manga`, () =>
-    fetchMangaByIDPromise(`32d76d19-8a05-4db0-9fc2-e0b0648fe9d0`),
+    fetchMangaByIDPromise(`62040a44-0935-46b7-a691-5ae5833af0ae`),
   );
 
   const mangaData = mangaQuery.data;
@@ -57,20 +57,35 @@ export default function Manga() {
   );
 
   const mangaVolumeData = mangaVolumeQuery.data;
-  const VolumeID = mangaVolumeData?.volumes?.[1].chapters?.[0].id ?? ``;
+  if (mangaVolumeData) {
+    console.log(Object.entries(mangaVolumeData.volumes));
+  }
+
+  const volumeIndex = mangaVolumeData
+    ? +Object.keys(mangaVolumeData.volumes)[0]
+    : -1;
+
+  const chapterIndex = mangaVolumeData
+    ? +Object.keys(mangaVolumeData.volumes[volumeIndex].chapters)[0]
+    : -1;
+
+  const volumeID =
+    mangaVolumeData?.volumes?.[volumeIndex].chapters?.[chapterIndex].id ?? ``;
 
   console.log(mangaVolumeData);
 
   // Get First Chapter of First Volume
   const mangaChapterQuery = useQuery<IMangaChapterData, Error>(
-    [`manga chapter`, VolumeID],
-    () => fetchChapterByIDPromise(VolumeID),
+    [`manga chapter`, volumeID],
+    () => fetchChapterByIDPromise(volumeID),
     {
-      enabled: !!VolumeID,
+      enabled: !!volumeID,
     },
   );
 
   const mangaChapterData = mangaChapterQuery.data;
+
+  console.log(mangaChapterData);
 
   // Get Pages from Chapter
   const mangaPagesQuery = useQuery<IMangaPagesRoot, Error>(
@@ -103,7 +118,15 @@ export default function Manga() {
               src={`https://uploads.mangadex.org/covers/${mangaData?.id}/${coverData?.attributes.fileName}`}
               alt={`${altTitleEN} Cover`}
             />
-            <div className="whitespace-pre">{mangaPagesData?.chapter.data}</div>
+            <div className="whitespace-pre">
+              {mangaPagesData?.chapter.data.map((page) => (
+                <img
+                  key={page}
+                  src={`${mangaPagesData.baseUrl}/data/${mangaPagesData.chapter.hash}/${page}`}
+                  alt=""
+                />
+              ))}
+            </div>
           </div>
           <Pages />
         </div>

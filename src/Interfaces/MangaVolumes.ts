@@ -12,7 +12,7 @@ export interface IMangaVolumes {
 interface Volume {
   volume: string;
   count: number;
-  chapters: Chapter[];
+  chapters: { [key: number]: Chapter };
 }
 
 interface Chapter {
