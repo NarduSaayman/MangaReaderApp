@@ -17,7 +17,7 @@ export default function RecentReadMangas() {
         chapter: `1a8bc908-7847-498f-a71f-69762713e829`,
       }),
     );
-  }, []);
+  }, [dispatch]);
 
   return <div>{recentlyReadMangas?.[0]?.id}</div>;
 }
