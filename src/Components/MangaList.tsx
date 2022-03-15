@@ -1,21 +1,28 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { ICoverListDatum } from "../Interfaces/CoverList";
-import { fetchCoverListPromise } from "../Services/MangaDexApi";
+import { IMangaData } from "../Interfaces/Manga";
+import { fetchMangasPromise } from "../Services/MangaDexApi";
+import Manga from "./Manga";
 
 export default function MangaList() {
-  const coverListQuery = useQuery<ICoverListDatum[], Error>(`cover list`, () =>
-    fetchCoverListPromise(),
+  const mangaListQuery = useQuery<IMangaData[], Error>(`manga list`, () =>
+    fetchMangasPromise(),
   );
 
-  const coverListData = coverListQuery.data;
+  const mangaListData = mangaListQuery.data;
+
+  const { isSuccess } = mangaListQuery;
+
+  console.log(mangaListData);
 
   return (
     <div>
-      <img
-        src={`https://uploads.mangadex.org/covers/${coverListData?.[9]?.relationships[0].id}/${coverListData?.[9]?.attributes.fileName}`}
-        alt=""
-      />
+      {isSuccess &&
+        mangaListData?.map((manga) => (
+          <div key={manga?.id}>
+            <Manga styleType="card" title={manga?.attributes?.title.en} />
+          </div>
+        ))}
     </div>
   );
 }
