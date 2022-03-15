@@ -86,12 +86,13 @@ export default function Manga(props: MangaProps) {
   // Get Volume
   const mangaVolumeQuery = useQuery<IMangaVolumes, Error>(
     [`manga volumes`, mangaID],
-    () => fetchMangaVolumesByIDPromise(mangaData?.[0].id ?? ``),
-    { enabled: !!mangaData?.[0].id },
+    () => fetchMangaVolumesByIDPromise(mangaData?.[0]?.id ?? ``),
+    { enabled: !!mangaData?.[0]?.id },
   );
 
   const mangaVolumeData = mangaVolumeQuery.data;
 
+  // found bug here need help volume and chapter inside volume can have a key of none
   console.log(mangaVolumeData);
 
   // get first item in volumes
