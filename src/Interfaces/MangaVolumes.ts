@@ -6,16 +6,16 @@ export interface IMangaVolumesRoot {
 }
 
 export interface IMangaVolumes {
-  volumes: { [key: number]: Volume };
+  volumes: IVolume[];
 }
 
-interface Volume {
+export interface IVolume {
   volume: string;
   count: number;
-  chapters: { [key: number]: Chapter };
+  chapters: IChapter[];
 }
 
-interface Chapter {
+export interface IChapter {
   chapter: string;
   id: string;
   others: string[];

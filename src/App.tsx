@@ -3,9 +3,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import logo from "./assets/images/logo.svg";
 import MangaList from "./Components/MangaList";
-import Manga from "./Components/Manga";
 import RecentlyReadMangas from "./Components/RecentlyReadMangas";
 import { rtkstore } from "./Store/rtkstore";
+import SingleManga from "./Components/SingleManga";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +41,7 @@ function App() {
             styleType="card"
             title="Kimetsu no Yaiba - Digital Colored Comics"
           /> */}
-          <Manga styleType="card" title="Solo Leveling" />
+          <SingleManga title="Solo Leveling" />
           <MangaList />
         </QueryClientProvider>
       </div>

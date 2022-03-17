@@ -2,16 +2,12 @@ import React, { useState, Fragment } from "react";
 import { useQuery } from "react-query";
 import { Dialog, Transition } from "@headlessui/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { IMangaChapterData } from "../Interfaces/Chapter";
 import { ICoverData } from "../Interfaces/Cover";
-import { IMangaData } from "../Interfaces/Manga";
-import { IMangaVolumes } from "../Interfaces/MangaVolumes";
+import { IMangaVolumes, IVolume } from "../Interfaces/MangaVolumes";
 import { IMangaPagesRoot } from "../Interfaces/Pages";
 import {
-  fetchChapterByIDPromise,
   fetchChapterPagesByIDPromise,
   fetchCoverByIDPromise,
-  fetchMangasByTitlePromise,
   fetchMangaVolumesByIDPromise,
 } from "../Services/MangaDexApi";
 
@@ -35,18 +31,21 @@ function Pages(props: PagesProps) {
           ))}
         </div>
       )}
-      {!hasPages && <div>Loading...</div>}
+      {!hasPages && <div>{`Sorry couldn't get this manga :(`}</div>}
     </>
   );
 }
 
 type MangaProps = {
+  mangaID: string;
+  coverID: string;
   title: string;
+  altTitleEN: string;
   styleType: string;
 };
 
 export default function Manga(props: MangaProps) {
-  const { title, styleType } = props;
+  const { mangaID, coverID, title, altTitleEN, styleType } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -56,23 +55,6 @@ export default function Manga(props: MangaProps) {
   function openModal() {
     setIsOpen(true);
   }
-
-  // Get Manga
-  const mangaQuery = useQuery<IMangaData[], Error>(title, () =>
-    fetchMangasByTitlePromise(title, 1),
-  );
-
-  const mangaData = mangaQuery.data;
-
-  const mangaID = mangaData?.[0]?.id;
-
-  // Cover ID for next query
-  const coverID =
-    mangaData?.[0].relationships.find(({ type }) => type === `cover_art`)?.id ||
-    ``;
-
-  const altTitleEN =
-    mangaData?.[0].attributes.altTitles.find((lang) => lang.en)?.en || ``;
 
   // Get Cover from manga
   const coverQuery = useQuery<ICoverData, Error>(
@@ -86,73 +68,103 @@ export default function Manga(props: MangaProps) {
   // Get Volume
   const mangaVolumeQuery = useQuery<IMangaVolumes, Error>(
     [`manga volumes`, mangaID],
-    () => fetchMangaVolumesByIDPromise(mangaData?.[0]?.id ?? ``),
-    { enabled: !!mangaData?.[0]?.id },
+    () => fetchMangaVolumesByIDPromise(mangaID),
+    { enabled: !!mangaID && mangaID !== `` },
   );
 
   const mangaVolumeData = mangaVolumeQuery.data;
 
   // found bug here need help volume and chapter inside volume can have a key of none
-  console.log(mangaVolumeData);
 
-  // get first item in volumes
-  const volumeIndex = mangaVolumeData
-    ? +Object.keys(mangaVolumeData.volumes)[0] // access first item in volumes array, +is to covert return to number
-    : -1; // return -1 if item at first index couldnt be returned
+  // // get first item in volumes
+  // const volumeIndex = mangaVolumeData
+  //   ? +Object.keys(mangaVolumeData?.volumes)[0] // access first item in volumes array, +is to covert return to number
+  //   : -1; // return -1 if item at first index couldnt be returned
 
-  // get first item in chapters from volume index
-  const chapterIndex = mangaVolumeData
-    ? +Object.keys(mangaVolumeData.volumes[volumeIndex].chapters)[0] // access first item in chapters array, +is to covert return to number
-    : -1; // return -1 if item at first index couldnt be returned
+  const Volumes: IVolume[] = mangaVolumeData
+    ? Object.values(mangaVolumeData?.volumes).filter(
+        (volume) => volume.volume !== `none`,
+      )
+    : [];
 
-  // set chapter ID to first chapter of first volume
-  const chapterID =
-    mangaVolumeData?.volumes?.[volumeIndex]?.chapters?.[chapterIndex]?.id ?? ``;
+  // const testVolumes = Object.values(
+  //   mangaVolumeData?.volumes.filter((volume) => volume.volume !== `none`),
+  // );
 
-  // Get First Chapter of First Volume
-  const mangaChapterQuery = useQuery<IMangaChapterData, Error>(
-    [`manga chapter`, chapterID],
-    () => fetchChapterByIDPromise(chapterID),
-    {
-      enabled: !!chapterID,
-    },
+  const volumesWithChap: IVolume[] = [];
+
+  Volumes.map((volume) =>
+    volumesWithChap.push({
+      volume: volume.volume,
+      count: volume.count,
+      chapters: Object.values(volume.chapters).filter(
+        (chapter) =>
+          chapter.chapter !== `none` || !!chapter !== undefined || null,
+      ),
+    }),
   );
 
-  const mangaChapterData = mangaChapterQuery.data;
+  // const filteredVol: IVolume[] = volumesWithChap.filter()
+
+  // // get first item in chapters from volume index
+  // const chapterIndex = mangaVolumeData
+  //   ? +Object.keys(mangaVolumeData?.volumes?.[volumeIndex]?.chapters)[0] // access first item in chapters array, +is to covert return to number
+  //   : -1; // return -1 if item at first index couldnt be returned
+
+  // // set chapter ID to first chapter of first volume
+  // const chapterID =
+  //   mangaVolumeData?.volumes?.[volumeIndex]?.chapters?.[chapterIndex]?.id ?? ``;
+
+  // Get First Chapter of First Volume
+  // const mangaChapterQuery = useQuery<IMangaChapterData, Error>(
+  //   [`manga chapter`, volumesWithChap],
+  //   () => fetchChapterByIDPromise(volumesWithChap?.[0]?.chapters?.[0]?.id),
+  //   {
+  //     enabled:
+  //       !!volumesWithChap &&
+  //       volumesWithChap?.[0]?.chapters?.[0]?.id !== undefined,
+  //   },
+  // );
+
+  // const mangaChapterData = mangaChapterQuery.data;
+  // const mangaChapterID = mangaChapterData?.id ?? ``;
+
+  const firstChapID = volumesWithChap?.[0]?.chapters?.[0]?.id;
 
   // Get Pages from Chapter
   const mangaPagesQuery = useQuery<IMangaPagesRoot, Error>(
-    [`manga chapter pages`, mangaChapterData?.id],
-    () => fetchChapterPagesByIDPromise(mangaChapterData?.id ?? ``),
+    [`manga chapter pages`, firstChapID],
+    () => fetchChapterPagesByIDPromise(firstChapID),
     {
-      enabled: !!mangaChapterData?.id,
+      enabled: !!firstChapID,
     },
   );
 
   const mangaPagesData = mangaPagesQuery.data;
 
-  const isLoading = mangaQuery.status === `loading`;
-  const isError = mangaQuery.isError && mangaData === undefined;
+  const isLoading =
+    coverQuery.isLoading &&
+    mangaVolumeQuery.isLoading &&
+    mangaPagesQuery.isLoading;
+  const isError = coverQuery.isError && coverData === undefined;
   const isSuccess =
-    mangaQuery.isSuccess &&
     coverQuery.isSuccess &&
     mangaVolumeQuery.isSuccess &&
-    mangaChapterQuery.isSuccess &&
     mangaPagesQuery.isSuccess;
 
   return (
     <>
       {isLoading && <div>`Loading...`;</div>}
       {isError && (
-        <div>{`An error has occurred: ${mangaQuery.error?.message}`}</div>
+        <div>{`An error has occurred: ${coverQuery.error?.message}`}</div>
       )}
       {isSuccess && styleType === `card` && (
         <div>
           <div>
             <button type="button" onClick={openModal}>
-              <h2 className="text-4xl">{mangaData?.[0].attributes.title.en}</h2>
+              <h2 className="text-4xl">{title}</h2>
               <img
-                src={`https://uploads.mangadex.org/covers/${mangaData?.[0].id}/${coverData?.attributes.fileName}`}
+                src={`https://uploads.mangadex.org/covers/${mangaID}/${coverData?.attributes.fileName}`}
                 alt={`${altTitleEN} Cover`}
               />
             </button>
@@ -207,14 +219,14 @@ export default function Manga(props: MangaProps) {
                         as="h3"
                         className="text-xl font-medium p-6 text-center leading-6 text-gray-900"
                       >
-                        {mangaData?.[0].attributes.title.en}
+                        {title}
                         <div className="font-light text-lg">{altTitleEN}</div>
                       </Dialog.Title>
                       <div className="mt-2 h-screen">
                         <Pages
                           baseUrl={mangaPagesData?.baseUrl ?? ``}
-                          pages={mangaPagesData?.chapter.data ?? [``]}
-                          hash={mangaPagesData?.chapter.hash ?? ``}
+                          pages={mangaPagesData?.chapter?.data ?? [``]}
+                          hash={mangaPagesData?.chapter?.hash ?? ``}
                         />
                       </div>
                     </div>

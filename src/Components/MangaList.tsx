@@ -5,22 +5,34 @@ import { fetchMangasPromise } from "../Services/MangaDexApi";
 import Manga from "./Manga";
 
 export default function MangaList() {
-  const mangaListQuery = useQuery<IMangaData[], Error>(`manga list`, () =>
-    fetchMangasPromise(),
+  const amount = 20;
+  const mangaListQuery = useQuery<IMangaData[], Error>(
+    [`mangas`, amount],
+    () => fetchMangasPromise(amount),
+    { enabled: !!amount },
   );
 
   const mangaListData = mangaListQuery.data;
 
   const { isSuccess } = mangaListQuery;
 
-  console.log(mangaListData);
-
   return (
     <div>
       {isSuccess &&
         mangaListData?.map((manga) => (
           <div key={manga?.id}>
-            <Manga styleType="card" title={manga?.attributes?.title.en} />
+            <Manga
+              styleType="card"
+              mangaID={manga?.id}
+              coverID={
+                manga?.relationships.find(({ type }) => type === `cover_art`)
+                  ?.id || ``
+              }
+              title={manga?.attributes?.title.en}
+              altTitleEN={
+                manga?.attributes.altTitles.find((lang) => lang.en)?.en || ``
+              }
+            />
           </div>
         ))}
     </div>
