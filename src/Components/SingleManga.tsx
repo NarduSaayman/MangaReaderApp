@@ -16,8 +16,6 @@ export default function MangaList(props: SingleManga) {
 
   const mangaData = mangaQuery.data;
 
-  console.log(mangaData);
-
   const { isSuccess } = mangaQuery;
   const hasData = mangaData !== undefined;
 

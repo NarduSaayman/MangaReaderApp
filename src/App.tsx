@@ -1,13 +1,9 @@
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import logo from "./assets/images/logo.svg";
 import MangaList from "./Components/MangaList";
 import RecentlyReadMangas from "./Components/RecentlyReadMangas";
-import { rtkstore } from "./Store/rtkstore";
 import SingleManga from "./Components/SingleManga";
-
-const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -30,20 +26,21 @@ function App() {
       </div>
 
       <div>
-        <Provider store={rtkstore}>
-          <RecentlyReadMangas />
-        </Provider>
+        <RecentlyReadMangas />
       </div>
 
       <div>
-        <QueryClientProvider client={queryClient}>
-          {/* <Manga
+        {/* <Manga
             styleType="card"
             title="Kimetsu no Yaiba - Digital Colored Comics"
           /> */}
-          <SingleManga title="Solo Leveling" />
-          <MangaList />
-        </QueryClientProvider>
+        <Routes>
+          <Route
+            path="/single"
+            element={<SingleManga title="Solo Leveling" />}
+          />
+          <Route path="/mangas" element={<MangaList />} />
+        </Routes>
       </div>
     </div>
   );
