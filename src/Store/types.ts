@@ -1,28 +1,28 @@
 /* eslint-disable no-unused-vars */
-export enum RecentlyReadState {
+export enum mangaListState {
   READING = `reading`,
   COMPLETED = `completed`,
   DROPPED = `dropped`,
+  PLAN_TO_READ = `plan to read`,
 }
 
-export enum RecentlyReadMangaAction {
+export enum mangaListMangaAction {
   ADD_MANGA = `ADD_MANGA`,
   SET_STATUS = `SET_STATUS`,
 }
 
-export type RecentlyReadManga = {
+export type mangaListManga = {
   id: string;
   coverUrl: string;
-  chapter: string;
-  status: RecentlyReadState;
+  status: mangaListState;
 };
 
 export type ActionTypes =
   | {
-      type: typeof RecentlyReadMangaAction.ADD_MANGA;
-      payload: { id: string; coverUrl: string; chapter: string };
+      type: typeof mangaListMangaAction.ADD_MANGA;
+      payload: { id: string; coverUrl: string };
     }
   | {
-      type: typeof RecentlyReadMangaAction.SET_STATUS;
-      payload: { id: string; status: RecentlyReadState };
+      type: typeof mangaListMangaAction.SET_STATUS;
+      payload: { id: string; status: mangaListState };
     };
