@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 export enum mangaListState {
-  READING = `reading`,
-  COMPLETED = `completed`,
-  DROPPED = `dropped`,
-  PLAN_TO_READ = `plan to read`,
+  READING = `Reading`,
+  COMPLETED = `Completed`,
+  DROPPED = `Not Interested`,
+  PLAN_TO_READ = `Plan To Read`,
 }
 
 export enum mangaListMangaAction {
@@ -13,14 +13,20 @@ export enum mangaListMangaAction {
 
 export type mangaListManga = {
   id: string;
-  coverUrl: string;
+  title: string;
+  coverURL: string;
   status: mangaListState;
 };
 
 export type ActionTypes =
   | {
       type: typeof mangaListMangaAction.ADD_MANGA;
-      payload: { id: string; coverUrl: string };
+      payload: {
+        id: string;
+        title: string;
+        coverUrl: string;
+        status: mangaListState;
+      };
     }
   | {
       type: typeof mangaListMangaAction.SET_STATUS;

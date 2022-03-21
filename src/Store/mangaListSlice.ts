@@ -10,13 +10,19 @@ export const mangaListSlice = createSlice({
   reducers: {
     addManga: (
       state,
-      action: PayloadAction<{ id: string; coverUrl: string }>,
+      action: PayloadAction<{
+        id: string;
+        title: string;
+        coverURL: string;
+        status: mangaListState;
+      }>,
     ) => [
       ...state,
       {
         id: action.payload.id,
-        coverUrl: action.payload.coverUrl,
-        status: mangaListState.READING,
+        title: action.payload.title,
+        coverURL: action.payload.coverURL,
+        status: action.payload.status,
       },
     ],
     setStatus: (

@@ -1,7 +1,7 @@
 import React from "react";
 import MangaStyle from "../Interfaces/MangaStyles";
 import SingleManga from "./SingleManga";
-import "./Styles/MangaList.css";
+import "../Styles/MangaList.css";
 
 export default function DevPickMangas() {
   return (

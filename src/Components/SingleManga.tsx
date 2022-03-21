@@ -25,10 +25,7 @@ export default function MangaList(props: SingleManga) {
   const titleEN = mangaData?.[0].attributes?.title.en ?? ``;
   const altTitleEN =
     mangaData?.[0].attributes.altTitles.find((lang) => lang.en)?.en || ``;
-  const tags =
-    mangaData?.[0].attributes?.tags.filter(
-      (tag) => tag.attributes.group === `genre`,
-    ) || [];
+  const tags = mangaData?.[0].attributes?.tags || [];
   const description = mangaData?.[0].attributes.description.en || ``;
   const year = mangaData?.[0].attributes.year || ``;
 

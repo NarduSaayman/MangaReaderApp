@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         "primary-red": `hsl(1, 95%, 43%)`,
         body: `hsl(224, 16%, 19%)`,
+        "searchbar-color": `hsl(224, 16%, 10%)`,
         "body-alt": `hsl(0, 0%, 96%)`,
       },
 
@@ -17,5 +18,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line global-require
+  plugins: [require(`@tailwindcss/line-clamp`)],
 };

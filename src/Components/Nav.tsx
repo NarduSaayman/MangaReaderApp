@@ -1,4 +1,5 @@
 import React, { useState } from "react"; // import state
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   const [isNavOpen, setIsNavOpen] = useState(false); // initiate isNavOpen state with false
@@ -38,28 +39,34 @@ export default function Nav() {
               </svg>
             </button>
             <ul className="flex flex-col justify-between items-center min-h-[250px]">
-              <li className="my-8 uppercase border-b border-gray-400">
-                <a href="/about">About</a>
+              <li className="my-8 uppercase hover:border-b border-primary-red">
+                <Link to="/manga-list">My List</Link>
               </li>
-              <li className="my-8 uppercase border-b border-gray-400">
-                <a href="/portfolio">Portfolio</a>
+              <li className="my-8 uppercase hover:border-b border-primary-red">
+                <Link to="/favourites">Favourites</Link>
               </li>
-              <li className="my-8 uppercase border-b border-gray-400">
-                <a href="/contact">Contact</a>
+              <li className="my-8 uppercase hover:border-b border-primary-red">
+                <Link to="/login">Contact</Link>
               </li>
             </ul>
           </div>
         </section>
 
-        <ul className="hidden space-x-8 lg:flex">
+        <ul className="hidden space-x-8 text-body-alt whitespace-nowrap lg:flex">
           <li>
-            <a href="/about">About</a>
+            <Link className="hover:text-primary-red" to="/manga-list">
+              My List
+            </Link>
           </li>
           <li>
-            <a href="/portfolio">Portfolio</a>
+            <Link className="hover:text-primary-red" to="/favourites">
+              Favourites
+            </Link>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <Link className="hover:text-primary-red" to="/login">
+              Login
+            </Link>
           </li>
         </ul>
       </nav>
