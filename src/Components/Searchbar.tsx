@@ -15,8 +15,6 @@ export default function Searchbar() {
       } else {
         navigate(`Page/Lols`);
       }
-
-      console.log(search);
     },
   });
 
