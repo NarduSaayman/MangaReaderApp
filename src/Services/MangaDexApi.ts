@@ -18,9 +18,9 @@ export const fetchCoverListPromise = (): Promise<ICoverListDatum[]> =>
   fetchCreator(`cover`).then((res: { data: ICoverListDatum[] }) => res.data);
 
 export const fetchMangasPromise = (amount: number): Promise<IMangaData[]> =>
-  fetchCreator(
-    `manga?limit=${amount}&hasAvailableChapters=true&status[]=completed`,
-  ).then((res: { data: IMangaData[] }) => res.data);
+  fetchCreator(`manga?limit=${amount}`).then(
+    (res: { data: IMangaData[] }) => res.data,
+  );
 
 export const fetchMangaByIDPromise = (id: string): Promise<IMangaData> =>
   fetchCreator(`manga/${id}`).then((res: { data: IMangaData }) => res.data);
@@ -32,14 +32,14 @@ export const fetchMangasByTitlePromise = (
   title: string,
   amount: number = 4,
 ): Promise<IMangaData[]> =>
-  fetchCreator(
-    `manga?title=${title}&limit=${amount}&hasAvailableChapters=1`,
-  ).then((res: { data: IMangaData[] }) => res.data);
+  fetchCreator(`manga?title=${title}&limit=${amount}`).then(
+    (res: { data: IMangaData[] }) => res.data,
+  );
 
 export const fetchMangaByTitlePromise = (
   title: string,
 ): Promise<IMangaData[]> =>
-  fetchCreator(`manga?title=${title}&limit=1&hasAvailableChapters=1`).then(
+  fetchCreator(`manga?title=${title}&limit=1`).then(
     (res: { data: IMangaData[] }) => res.data,
   );
 

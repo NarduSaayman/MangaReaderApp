@@ -1,37 +1,42 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./rtkstore";
-import { RecentlyReadManga, RecentlyReadState } from "./types";
+import { mangaListManga, mangaListState } from "./types";
 
-const initialState: RecentlyReadManga[] = [];
+const initialState: mangaListManga[] = [];
 
-export const recentlyReadMangaSlice = createSlice({
+export const mangaListSlice = createSlice({
   name: `Recently Read Mangas`,
   initialState,
   reducers: {
     addManga: (
       state,
-      action: PayloadAction<{ id: string; coverUrl: string; chapter: string }>,
+      action: PayloadAction<{
+        id: string;
+        title: string;
+        coverURL: string;
+        status: mangaListState;
+      }>,
     ) => [
       ...state,
       {
         id: action.payload.id,
-        coverUrl: action.payload.id,
-        chapter: action.payload.chapter,
-        status: RecentlyReadState.READING,
+        title: action.payload.title,
+        coverURL: action.payload.coverURL,
+        status: action.payload.status,
       },
     ],
     setStatus: (
       state,
-      action: PayloadAction<{ id: string; status: RecentlyReadState }>,
+      action: PayloadAction<{ id: string; status: mangaListState }>,
     ) => {
       const { id, status } = action.payload;
       // eslint-disable-next-line no-confusing-arrow
       const updateStatus = (
-        payloadStatus: RecentlyReadState,
-        newStatus: RecentlyReadState,
+        payloadStatus: mangaListState,
+        newStatus: mangaListState,
       ) =>
         // eslint-disable-next-line implicit-arrow-linebreak
-        payloadStatus === newStatus ? RecentlyReadState.READING : newStatus;
+        payloadStatus === newStatus ? mangaListState.READING : newStatus;
 
       return [
         ...state.map(
@@ -48,11 +53,11 @@ export const recentlyReadMangaSlice = createSlice({
   },
 });
 
-export const { addManga, setStatus } = recentlyReadMangaSlice.actions;
+export const { addManga, setStatus } = mangaListSlice.actions;
 
-export const selectedMangas = (state: RootState) => state.recentlyReadMangas;
+export const selectedMangas = (state: RootState) => state.mangaListMangas;
 export const selectedMangaByID = (state: RootState, id: string) =>
   // eslint-disable-next-line implicit-arrow-linebreak
-  state.recentlyReadMangas.find((manga: { id: string }) => manga.id === id);
+  state.mangaListMangas.find((manga: { id: string }) => manga.id === id);
 
-export default recentlyReadMangaSlice.reducer;
+export default mangaListSlice.reducer;

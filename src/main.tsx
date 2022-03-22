@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { rtkstore } from "./Store/rtkstore";
 import "./tailwind.css";
+import "./main.css";
 
 const queryClient = new QueryClient();
 

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import recentlyReadMangaReducer from "./recentlyreadSlice";
+import mangaListMangaReducer from "./mangaListSlice";
 
 export const rtkstore = configureStore({
   reducer: {
-    recentlyReadMangas: recentlyReadMangaReducer,
+    mangaListMangas: mangaListMangaReducer,
   },
 });
 
