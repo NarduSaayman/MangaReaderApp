@@ -46,7 +46,7 @@ export default function Nav() {
                 <Link to="/favourites">Favourites</Link>
               </li>
               <li className="my-8 uppercase hover:border-b border-primary-red">
-                <Link to="/login">Contact</Link>
+                <Link to="/login">Login</Link>
               </li>
             </ul>
           </div>

@@ -116,7 +116,7 @@ export default function Manga(props: MangaProps) {
               alt={`${altTitleEN} Cover`}
             />
           </div>
-          <div className="px-5 min-w-[75%] bg-white rounded-r-2xl sm:min-w-[50%] lg:w-80">
+          <div className="px-5 min-w-[75%] bg-white rounded-r-2xl sm:w-80">
             <div className="overflow-hidden my-auto max-h-[300px]">
               <h4 className="py-3 font-light text-primary-red">
                 {tags

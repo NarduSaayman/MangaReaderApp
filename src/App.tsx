@@ -9,6 +9,8 @@ import Nav from "./Components/Nav";
 import MangaStyle from "./Interfaces/MangaStyles";
 import MangaPage from "./Components/MangaPage";
 import UserList from "./Components/UserList";
+import Login from "./Components/Login";
+import Favourites from "./Components/Favourites";
 
 function App() {
   return (
@@ -62,7 +64,10 @@ function App() {
             }
           />
           <Route path="/manga-list" element={<UserList />} />
+          <Route path="/manga-list/Page/:mangaTitle" element={<MangaPage />} />
           <Route path="/Developers-Picks" element={<DevPicksMangas />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Favourites" element={<Favourites />} />
         </Routes>
       </div>
       {/* 
