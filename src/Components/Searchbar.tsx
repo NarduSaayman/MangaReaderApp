@@ -13,7 +13,7 @@ export default function Searchbar() {
       if (values?.titleSearch) {
         navigate(`Page/${search}`);
       } else {
-        navigate(`Page/Lols`);
+        navigate(`Page/Memes`);
       }
     },
   });
