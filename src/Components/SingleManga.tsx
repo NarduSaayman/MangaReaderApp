@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { IMangaData } from "../Interfaces/Manga";
 import MangaStyle from "../Interfaces/MangaStyles";
@@ -45,7 +46,11 @@ export default function MangaList(props: SingleMangaProps) {
           year={year}
         />
       )}
-      {isLoading && <div>Loading..</div>}
+      {isLoading && (
+        <div className="flex justify-center px-96 pt-64 m-auto">
+          <AiOutlineLoading3Quarters className="text-6xl text-center text-white animate-spin" />
+        </div>
+      )}
       {isError && <div>Error...</div>}
     </>
   );

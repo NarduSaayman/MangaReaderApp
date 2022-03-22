@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import { useQuery } from "react-query";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { HiOutlineSelector } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -90,7 +90,45 @@ export default function Manga(props: MangaProps) {
 
   return (
     <>
-      {isLoading && <div>`Loading...`</div>}
+      {/* Card Loading */}
+      {isLoading && styleType === MangaStyle.CARD && (
+        <div className="flex flex-row">
+          <div className=" w-[210px] h-[300px] rounded-l-xl animate-pulse" />
+          <div className="px-5 min-w-[75%] bg-white rounded-r-2xl sm:w-80">
+            <div className="px-36 pt-28 m-auto text-6xl">
+              <AiOutlineLoading3Quarters className="animate-spin" />
+            </div>
+            <div className="overflow-hidden my-auto max-h-[300px]">
+              <div className="py-3 font-light text-primary-red" />
+              <div className="text-sm font-thin" />
+              <div className="pt-5 pb-1 text-4xl truncate" />
+              <div className="text-lg text-primary-red line-clamp-1" />
+              <div className="flex overflow-hidden flex-wrap gap-1 py-3 font-light">
+                <div className="px-2 text-xs text-body-alt bg-body/70 rounded-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Header Laoding */}
+      {isLoading && styleType === MangaStyle.HEADERITEM && (
+        <div className="flex flex-row justify-center w-[90vw] h-[70vh] bg-fixed bg-body bg-center bg-cover">
+          <div className="hidden overflow-hidden min-w-[50%] sm:block" />
+          <div className="flex flex-col">
+            <div className="my-auto max-w-xs sm:px-7 xl:max-w-[80%]">
+              <div className="text-white">
+                <div className="font-M-Plus-2 text-4xl" />
+                <div className="py-3 font-extralight text-primary-red" />
+                <div className="overflow-hidden max-w-[inherit] font-light text-gray-300 text-ellipsis line-clamp-3 sm:line-clamp-6" />
+
+                <div className="flex justify-end py-10 lg:justify-start" />
+              </div>
+            </div>
+            <div className="flex justify-end py-11 pr-8 lg:justify-start lg:pl-8" />
+          </div>
+        </div>
+      )}
       {isError && (
         <div>{`An error has occurred: ${coverQuery.error?.message}`}</div>
       )}
