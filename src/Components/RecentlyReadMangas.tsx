@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addManga } from "../Store/recentlyreadSlice";
 import { RootState } from "../Store/rtkstore";
 
-export default function rtkRecentReadMangas() {
+export default function RecentReadMangas() {
   const recentlyReadMangas = useSelector(
     (state: RootState) => state.recentlyReadMangas,
   );
@@ -17,9 +17,7 @@ export default function rtkRecentReadMangas() {
         chapter: `1a8bc908-7847-498f-a71f-69762713e829`,
       }),
     );
-
-    console.log(recentlyReadMangas);
-  }, []);
+  }, [dispatch]);
 
   return <div>{recentlyReadMangas?.[0]?.id}</div>;
 }

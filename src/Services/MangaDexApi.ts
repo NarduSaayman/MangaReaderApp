@@ -1,74 +1,75 @@
-import { from, Observable } from "rxjs";
-import { iCoverList } from "../Interfaces/CoverList";
-import { iManga } from "../Interfaces/Manga";
+import { IMangaChapterData } from "../Interfaces/Chapter";
+import { ICoverData } from "../Interfaces/Cover";
+import { ICoverListDatum } from "../Interfaces/CoverList";
+import { IMangaData } from "../Interfaces/Manga";
+import { IMangaVolumes } from "../Interfaces/MangaVolumes";
+import { IMangaListDatum } from "../Interfaces/MangaList";
+import { IMangaPagesRoot } from "../Interfaces/Pages";
 
-export function fetchCoverList(): Observable<iCoverList> {
-  return from(
-    fetch(`https://api.mangadex.org/cover`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-        return res?.json() as Promise<iCoverList>;
-      })
-      .then((data: iCoverList) => data)
-      .catch((err) => {
-        throw new Error(err.toString());
-      }),
-  ); // end from
-} // end function
+export const fetchCoverListPromise = (): Promise<ICoverListDatum[]> => {
+  const response = fetch(`https://api.mangadex.org/cover`)
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
 
-export function fetchMangas(): Observable<iManga[]> {
-  return from(
-    fetch(`https://api.mangadex.org/manga`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-        return res?.json() as Promise<iManga[]>;
-      })
-      .then((data: iManga[]) => data)
-      .catch((err) => {
-        throw new Error(err.toString());
-      }),
-  ); // end from
-} // end function
+export const fetchMangasPromise = (): Promise<IMangaListDatum[]> => {
+  const response = fetch(`https://api.mangadex.org/manga`)
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
 
-export function fetchMangaByID(id: string): Observable<iManga> {
-  return from(
-    fetch(`https://api.mangadex.org/manga/${id}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-        return res?.json() as Promise<iManga>;
-      })
-      .then((data: iManga) => data)
-      .catch((err) => {
-        throw new Error(err.toString());
-      }),
-  ); // end from
-} // end function
+export const fetchMangaByIDPromise = (id: string): Promise<IMangaData> => {
+  const response = fetch(`https://api.mangadex.org/manga/${id}`)
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
 
-export function fetchMangaByIDPromise(id: string): Promise<Response> {
-  return fetch(`https://api.mangadex.org/manga/${id}`);
-} // end function
+export const fetchCoverByIDPromise = (id: string): Promise<ICoverData> => {
+  const response = fetch(`https://api.mangadex.org/cover/${id}`)
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
 
-export function fetchMangasByTitle(
+export const fetchMangasByTitlePromise = (
   title: string,
   amount: number = 4,
-): Observable<iManga[]> {
-  return from(
-    fetch(`https://api.mangadex.org/manga?title=${title}&limit=${amount}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-        return res?.json() as Promise<iManga[]>;
-      })
-      .then((data: iManga[]) => data)
-      .catch((err) => {
-        throw new Error(err.toString());
-      }),
-  ); // end from
-} // end function
+): Promise<IMangaListDatum[]> => {
+  const response = fetch(
+    `https://api.mangadex.org/manga?title=${title}&limit=${amount}`,
+  )
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
+
+export const fetchMangaVolumesByIDPromise = (
+  id: string,
+): Promise<IMangaVolumes> => {
+  const response = fetch(`https://api.mangadex.org/manga/${id}/aggregate?
+  translatedLanguage[]=en`)
+    .then((res) => res.json())
+    .then((res) => res);
+  return response;
+}; // end function
+
+export const fetchChapterByIDPromise = (
+  id: string,
+): Promise<IMangaChapterData> => {
+  const response = fetch(`https://api.mangadex.org/chapter/${id}`)
+    .then((res) => res.json())
+    .then((res) => res.data);
+  return response;
+}; // end function
+
+export const fetchChapterPagesByIDPromise = (
+  id: string,
+): Promise<IMangaPagesRoot> => {
+  const response = fetch(`https://api.mangadex.org/at-home/server/${id}`)
+    .then((res) => res.json())
+    .then((res) => res);
+  return response;
+}; // end function

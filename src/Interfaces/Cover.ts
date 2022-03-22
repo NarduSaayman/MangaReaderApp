@@ -1,4 +1,4 @@
-interface Relationship {
+export interface Relationship {
   id: string;
   type: string;
 }
@@ -13,15 +13,15 @@ interface Attributes {
   version: number;
 }
 
-interface Data {
+export interface ICoverData {
   id: string;
   type: string;
   attributes: Attributes;
   relationships: Relationship[];
 }
 
-export interface iCover {
+export interface ICover {
   result: string;
   response: string;
-  data: Data;
+  data: ICoverData;
 }

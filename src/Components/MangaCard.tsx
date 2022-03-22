@@ -1,44 +1,54 @@
-import React, { useEffect, useState, SetStateAction } from "react";
-import { useQuery, UseQueryResult } from "react-query";
-import { iManga } from "../Interfaces/Manga";
-import { fetchMangaByID, fetchMangaByIDPromise } from "../Services/MangaDexApi";
+import React from "react";
+import { useQuery } from "react-query";
+import { ICoverData } from "../Interfaces/Cover";
+import { IMangaData } from "../Interfaces/Manga";
+import {
+  fetchCoverByIDPromise,
+  fetchMangaByIDPromise,
+} from "../Services/MangaDexApi";
 
 export default function MangaCard() {
-  // const [getManga, setManga] = useState<iManga | null>();
+  const mangaQuery = useQuery<IMangaData, Error>(`manga`, () =>
+    fetchMangaByIDPromise(`789642f8-ca89-4e4e-8f7b-eee4d17ea08b`),
+  );
 
-  // const manga$ = fetchMangaByID(`32d76d19-8a05-4db0-9fc2-e0b0648fe9d0`);
+  const mangaData = mangaQuery.data;
+  const coverID =
+    mangaData?.relationships.find(({ type }) => type === `cover_art`)?.id || ``;
 
-  // useEffect(() => {
-  //   manga$.subscribe((manga: SetStateAction<iManga | null | undefined>) => {
-  //     console.log(manga);
-  //     console.log(getManga?.data.attributes.title.en);
-  //     if (manga !== null && manga !== undefined) {
-  //       setManga(manga);
-  //     }
-  //   });
-  // }, []);
+  const altTitleEN =
+    mangaData?.attributes.altTitles.find((lang) => lang.en)?.en || ``;
 
-  const { status, error, data }: UseQueryResult<iManga, Error> = useQuery<
-    iManga,
-    Error
-  >(`manga`, async () => {
-    const res = await fetchMangaByIDPromise(
-      `32d76d19-8a05-4db0-9fc2-e0b0648fe9d0`,
-    );
-    return res?.json() as Promise<iManga>;
-  });
+  const coverQuery = useQuery<ICoverData, Error>(
+    [`cover`, coverID],
+    () => fetchCoverByIDPromise(coverID),
+    { enabled: !!coverID && coverID !== `` },
+  );
 
-  if (status === `loading`) {
-    return <div>`Loading...`;</div>;
-  }
+  const coverData = coverQuery.data;
 
-  if (status === `error`) {
-    return <div>{`An error has occurred: ${error?.message}`}</div>;
-  }
+  const isLoading = mangaQuery.status === `loading`;
+  const isError = mangaQuery.status === `error`;
+  const isSuccess = mangaQuery.isSuccess && coverQuery.isSuccess;
 
+  // Todo different styling here
   return (
-    <div>
-      <p className="whitespace-pre">{data?.data?.attributes?.title?.en}</p>
-    </div>
+    <>
+      {isLoading && <div>`Loading...`;</div>}
+      {isError && (
+        <div>{`An error has occurred: ${mangaQuery.error?.message}`}</div>
+      )}
+      {isSuccess && (
+        <div>
+          <h2 className="whitespace-pre">{mangaData?.attributes.title.en}</h2>
+          <div>
+            <img
+              src={`https://uploads.mangadex.org/covers/${mangaData?.id}/${coverData?.attributes.fileName}`}
+              alt={`${altTitleEN} Cover`}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

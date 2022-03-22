@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { iCoverList } from "../Interfaces/CoverList";
-import { fetchCoverList } from "../Services/MangaDexApi";
+import React from "react";
+import { useQuery } from "react-query";
+import { ICoverListDatum } from "../Interfaces/CoverList";
+import { fetchCoverListPromise } from "../Services/MangaDexApi";
 
 export default function MangaList() {
-  const [coverList, setCoverList] = useState<iCoverList | null>(null);
+  const coverListQuery = useQuery<ICoverListDatum[], Error>(`cover list`, () =>
+    fetchCoverListPromise(),
+  );
 
-  const coverList$ = fetchCoverList();
-
-  useEffect(() => {
-    coverList$.subscribe((covers: React.SetStateAction<iCoverList | null>) => {
-      console.log(covers);
-      setCoverList(covers);
-    });
-  }, []);
+  const coverListData = coverListQuery.data;
 
   return (
     <div>
       <img
-        src={`https://uploads.mangadex.org/covers/${coverList?.data[1].relationships[0].id}/${coverList?.data[1].attributes.fileName}`}
+        src={`https://uploads.mangadex.org/covers/${coverListData?.[9]?.relationships[0].id}/${coverListData?.[9]?.attributes.fileName}`}
         alt=""
       />
     </div>
