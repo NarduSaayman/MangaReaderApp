@@ -9,6 +9,7 @@ export default function Nav() {
       <nav>
         <section className="flex lg:hidden">
           <button
+            aria-label="Mobile Hamburger Menu"
             type="button"
             className="space-y-2"
             onClick={() => setIsNavOpen((prev) => !prev)} // toggle isNavOpen state on click

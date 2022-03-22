@@ -5,12 +5,12 @@ import MangaStyle from "../Interfaces/MangaStyles";
 import { fetchMangaByTitlePromise } from "../Services/MangaDexApi";
 import Manga from "./Manga";
 
-type SingleManga = {
+type SingleMangaProps = {
   title: string;
   styleType: MangaStyle;
 };
 
-export default function MangaList(props: SingleManga) {
+export default function MangaList(props: SingleMangaProps) {
   const { title, styleType } = props;
   const { isSuccess, isLoading, isError, data } = useQuery<IMangaData[], Error>(
     title,
@@ -32,7 +32,7 @@ export default function MangaList(props: SingleManga) {
   const hasData = mangaData !== undefined;
 
   return (
-    <div>
+    <>
       {isSuccess && hasData && (
         <Manga
           styleType={styleType}
@@ -47,6 +47,6 @@ export default function MangaList(props: SingleManga) {
       )}
       {isLoading && <div>Loading..</div>}
       {isError && <div>Error...</div>}
-    </div>
+    </>
   );
 }

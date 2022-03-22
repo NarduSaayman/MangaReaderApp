@@ -7,9 +7,9 @@ module.exports = {
         Mochiy: [`Mochiy Pop One`, `sans-serif`],
       },
       colors: {
-        "primary-red": `hsl(1, 95%, 43%)`,
-        body: `hsl(224, 16%, 19%)`,
-        "searchbar-color": `hsl(224, 16%, 10%)`,
+        "primary-red": `hsl(1, 100%, 43%)`,
+        body: `hsl(224, 16%, 10%)`,
+        "searchbar-color": `hsl(224, 16%, 6%)`,
         "body-alt": `hsl(0, 0%, 96%)`,
       },
 

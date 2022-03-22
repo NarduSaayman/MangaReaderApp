@@ -45,7 +45,6 @@ export default function Manga(props: MangaProps) {
     title,
     description,
     year,
-
     altTitleEN,
     styleType,
     tags,
@@ -170,7 +169,7 @@ export default function Manga(props: MangaProps) {
             <div className="my-auto max-w-xs sm:px-7 xl:max-w-[80%]">
               <div className="text-white">
                 <h2 className="font-M-Plus-2 text-4xl">{title}</h2>
-                <h4 className="py-3 font-extralight text-primary-red">
+                <h3 className="py-3 font-extralight text-primary-red">
                   {tags
                     .filter((tag) => tag.attributes.group === `genre`)
                     .map((tag) => {
@@ -181,7 +180,7 @@ export default function Manga(props: MangaProps) {
                         return ` & ${tag.attributes.name.en.toUpperCase()}`;
                       return null;
                     })}
-                </h4>
+                </h3>
                 <p className="overflow-hidden max-w-[inherit] font-light text-gray-300 text-ellipsis line-clamp-3 sm:line-clamp-6">
                   {description}
                 </p>
@@ -285,7 +284,7 @@ export default function Manga(props: MangaProps) {
             <div className="my-auto max-w-sm sm:px-7 xl:max-w-[80%]">
               <div className="text-white">
                 <h2 className="font-M-Plus-2 text-4xl">{title}</h2>
-                <h4 className="py-3 font-extralight text-primary-red">
+                <h3 className="py-3 font-extralight text-primary-red">
                   {tags
                     .filter((tag) => tag.attributes.group === `genre`)
                     .map((tag) => {
@@ -296,8 +295,8 @@ export default function Manga(props: MangaProps) {
                         return ` & ${tag.attributes.name.en.toUpperCase()}`;
                       return null;
                     })}
-                </h4>
-                <p className="overflow-y-scroll pr-6 max-w-[inherit] h-[50vh] font-light text-gray-300 text-ellipsis line-clamp-none">
+                </h3>
+                <p className="overflow-y-scroll pr-6 max-w-[inherit] h-[25vh] font-light text-gray-300 text-ellipsis line-clamp-none">
                   {description}
                 </p>
 
@@ -370,7 +369,7 @@ export default function Manga(props: MangaProps) {
                 </div>
               </div>
 
-              <h4 className="flex overflow-hidden flex-wrap gap-1 py-3 font-light">
+              <h4 className="flex overflow-y-scroll flex-wrap gap-1 py-3 max-h-44 font-light">
                 {tags
                   .filter((tag) => tag.attributes.group !== `genre`)
                   .map((tag) => (
