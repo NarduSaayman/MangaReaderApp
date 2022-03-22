@@ -103,7 +103,7 @@ interface Attributes {
   version: number;
 }
 
-interface Tag {
+export interface Tag {
   id: string;
   type: string;
   attributes: Attributes;

@@ -16,8 +16,6 @@ export default function MangaList() {
 
   const mangaListData = mangaListQuery.data;
 
-  console.log(mangaListData);
-
   const { isSuccess } = mangaListQuery;
 
   return (

@@ -87,7 +87,6 @@ export default function Manga(props: MangaProps) {
       );
     }
     setIsSelected({ status: state });
-    console.log(userMnagaList);
   };
 
   return (
